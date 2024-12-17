@@ -64,7 +64,7 @@ else
       portainer/agent
     msg_ok "Installed Portainer Agent $PORTAINER_AGENT_LATEST_VERSION"
   fi
-  ead -r -p "Would you like to add the Komodo Peripheray Agent? <y/N> " prompt
+  read -r -p "Would you like to add the Komodo Peripheray Agent? <y/N> " prompt
   if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then    
     msg_info "Installing Komodo Periphery Agent (version: $KOMODO_AGENT_LATEST_VERSION)"
     $STD curl -sSL https://raw.githubusercontent.com/mbecker20/komodo/main/scripts/setup-periphery.py | python3
