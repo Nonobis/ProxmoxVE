@@ -64,15 +64,17 @@ else
       portainer/agent
     msg_ok "Installed Portainer Agent $PORTAINER_AGENT_LATEST_VERSION"
   fi
-  read -r -p "Would you like to add the Komodo Peripheray Agent? <y/N> " prompt
-  if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then    
-    msg_info "Installing Komodo Periphery Agent (version: $KOMODO_AGENT_LATEST_VERSION)"
-    $STD curl -sSL https://raw.githubusercontent.com/mbecker20/komodo/main/scripts/setup-periphery.py | python3
-    msg_ok "Enabling and starting the Periphery service..."
-    $STD systemctl enable periphery.service || error "Failed to enable Periphery service."
-    $STD systemctl start periphery.service || error "Failed to start Periphery service."
-    msg_ok "Installed Komodo Periphery Agent" 
-  fi
+fi
+
+read -r -p "Would you like to add the Komodo Peripheray Agent? <y/N> " prompt
+if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then    
+  msg_info "Installing Komodo Periphery Agent $KOMODO_AGENT_LATEST_VERSION"
+  $STD curl -sSL https://raw.githubusercontent.com/mbecker20/komodo/main/scripts/setup-periphery.py | python3
+  msg_info "Enabling the Periphery service..."
+  $STD systemctl enable periphery.service
+  $STD systemctl start periphery.service
+  msg_info "Starting the Periphery service..."
+  msg_ok "Installed Komodo Periphery Agent $KOMODO_AGENT_LATEST_VERSION"
 fi
 
 motd_ssh
