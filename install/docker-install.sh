@@ -27,6 +27,7 @@ DOCKER_LATEST_VERSION=$(get_latest_release "moby/moby")
 PORTAINER_LATEST_VERSION=$(get_latest_release "portainer/portainer")
 PORTAINER_AGENT_LATEST_VERSION=$(get_latest_release "portainer/agent")
 DOCKER_COMPOSE_LATEST_VERSION=$(get_latest_release "docker/compose")
+KOMODO_AGENT_LATEST_VERSION=$(get_latest_release "komodo/agent")
 
 msg_info "Installing Docker $DOCKER_LATEST_VERSION"
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
@@ -60,6 +61,13 @@ else
       -v /var/lib/docker/volumes:/var/lib/docker/volumes \
       portainer/agent
     msg_ok "Installed Portainer Agent $PORTAINER_AGENT_LATEST_VERSION"
+  fi
+  ead -r -p "Would you like to add the Komodo Agent? <y/N> " prompt
+  if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
+    msg_info "Installing Komodo agent from https://raw.githubusercontent.com/mbecker20/komodo/main/scripts/setup-periphery.py"
+    $STD curl -sSL https://raw.githubusercontent.com/mbecker20/komodo/main/scripts/setup-periphery.py | python3
+    msg_ok "Installed Komodo Agent"
+    msg_ok "Configuring Komodo Agent"
   fi
 fi
 
