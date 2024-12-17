@@ -17,6 +17,8 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
+$STD apt-get install -y curl
+$STD apt-get install -y python3
 msg_ok "Installed Dependencies"
 
 get_latest_release() {
@@ -27,7 +29,7 @@ DOCKER_LATEST_VERSION=$(get_latest_release "moby/moby")
 PORTAINER_LATEST_VERSION=$(get_latest_release "portainer/portainer")
 PORTAINER_AGENT_LATEST_VERSION=$(get_latest_release "portainer/agent")
 DOCKER_COMPOSE_LATEST_VERSION=$(get_latest_release "docker/compose")
-KOMODO_AGENT_LATEST_VERSION=$(get_latest_release "komodo/agent")
+KOMODO_AGENT_LATEST_VERSION=$(get_latest_release "mbecker20/komodo")
 
 msg_info "Installing Docker $DOCKER_LATEST_VERSION"
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
@@ -62,12 +64,14 @@ else
       portainer/agent
     msg_ok "Installed Portainer Agent $PORTAINER_AGENT_LATEST_VERSION"
   fi
-  ead -r -p "Would you like to add the Komodo Agent? <y/N> " prompt
-  if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
-    msg_info "Installing Komodo agent from https://raw.githubusercontent.com/mbecker20/komodo/main/scripts/setup-periphery.py"
+  ead -r -p "Would you like to add the Komodo Peripheray Agent? <y/N> " prompt
+  if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then    
+    msg_info "Installing Komodo Periphery Agent (version: $KOMODO_AGENT_LATEST_VERSION)"
     $STD curl -sSL https://raw.githubusercontent.com/mbecker20/komodo/main/scripts/setup-periphery.py | python3
-    msg_ok "Installed Komodo Agent"
-    msg_ok "Configuring Komodo Agent"
+    msg_ok "Enabling and starting the Periphery service..."
+    $STD systemctl enable periphery.service || error "Failed to enable Periphery service."
+    $STD systemctl start periphery.service || error "Failed to start Periphery service."
+    msg_ok "Installed Komodo Periphery Agent" 
   fi
 fi
 
