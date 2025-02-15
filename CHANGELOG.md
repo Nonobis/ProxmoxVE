@@ -17,6 +17,28 @@ All LXC instances created using this repository come pre-installed with Midnight
 Do not break established syntax in this file, as it is automatically updated by a Github Workflow
 
 
+## 2025-02-14
+
+### Changes
+
+### 🚀 Updated Scripts
+
+- Fix homarr [@CrazyWolf13](https://github.com/CrazyWolf13) ([#2369](https://github.com/community-scripts/ProxmoxVE/pull/2369))
+
+### 🌐 Website
+
+- RustDesk Server - Added configuration guide to json [@tremor021](https://github.com/tremor021) ([#2389](https://github.com/community-scripts/ProxmoxVE/pull/2389))
+
+### 🧰 Maintenance
+
+- [gh] Update script-test.yml [@michelroegl-brunner](https://github.com/michelroegl-brunner) ([#2399](https://github.com/community-scripts/ProxmoxVE/pull/2399))
+- [gh] Introducing new Issue Github Template Feature (Bug, Feature, Task) [@MickLesk](https://github.com/MickLesk) ([#2394](https://github.com/community-scripts/ProxmoxVE/pull/2394))
+
+### 📡 API
+
+- [API]Add more enpoints to API [@michelroegl-brunner](https://github.com/michelroegl-brunner) ([#2390](https://github.com/community-scripts/ProxmoxVE/pull/2390))
+- [API] Update api.func: Remove unwanted file creation [@michelroegl-brunner](https://github.com/michelroegl-brunner) ([#2378](https://github.com/community-scripts/ProxmoxVE/pull/2378))
+
 ## 2025-02-13
 
 ### Changes
@@ -30,6 +52,8 @@ Do not break established syntax in this file, as it is automatically updated by 
 
 ### 🚀 Updated Scripts
 
+- Missing ";" in ct/trilium.sh [@Scorpoon](https://github.com/Scorpoon) ([#2380](https://github.com/community-scripts/ProxmoxVE/pull/2380))
+- Fix: Element Synapse - Fixed server listening on both localhost and 0.0.0.0 [@tremor021](https://github.com/tremor021) ([#2376](https://github.com/community-scripts/ProxmoxVE/pull/2376))
 - [core] cleanup (remove # App Default Values) [@MickLesk](https://github.com/MickLesk) ([#2356](https://github.com/community-scripts/ProxmoxVE/pull/2356))
 - Fix: Kometa - Increase RAM and HDD resources [@tremor021](https://github.com/tremor021) ([#2367](https://github.com/community-scripts/ProxmoxVE/pull/2367))
 - [core] cleanup (remove base_settings & unneeded comments) [@MickLesk](https://github.com/MickLesk) ([#2351](https://github.com/community-scripts/ProxmoxVE/pull/2351))
