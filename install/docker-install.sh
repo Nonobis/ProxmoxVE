@@ -6,6 +6,7 @@
 # Source: https://www.docker.com/
 
 source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
+
 color
 verb_ip6
 catch_errors
@@ -21,12 +22,15 @@ DOCKER_LATEST_VERSION=$(get_latest_release "moby/moby")
 PORTAINER_LATEST_VERSION=$(get_latest_release "portainer/portainer")
 PORTAINER_AGENT_LATEST_VERSION=$(get_latest_release "portainer/agent")
 DOCKER_COMPOSE_LATEST_VERSION=$(get_latest_release "docker/compose")
+KOMODO_PERIPHERY_LATEST_VERSION=$(get_latest_release "moghtech/komodo")
 
 msg_info "Installing Docker $DOCKER_LATEST_VERSION"
+
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
 mkdir -p $(dirname $DOCKER_CONFIG_PATH)
 echo -e '{\n  "log-driver": "journald"\n}' >/etc/docker/daemon.json
 $STD sh <(curl -sSL https://get.docker.com)
+
 msg_ok "Installed Docker $DOCKER_LATEST_VERSION"
 
 read -r -p "Would you like to add Portainer? <y/N> " prompt
@@ -55,6 +59,21 @@ else
       portainer/agent
     msg_ok "Installed Portainer Agent $PORTAINER_AGENT_LATEST_VERSION"
   fi
+fi
+
+read -r -p "Would you like to install the Komodo Periphery Agent? <y/N> " prompt
+if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
+  msg_info "Installing Komodo Periphery Agent $KOMODO_PERIPHERY_LATEST_VERSION"
+  $STD docker run -d \
+    --name komodo-periphery \
+    --restart=always \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /etc/machine-id:/etc/machine-id \
+    -v /etc/hostname:/etc/hostname \
+    -v /etc/os-release:/etc/os-release \
+    -v /etc/komodo:/etc/komodo \
+    ghcr.io/moghtech/komodo-periphery:$KOMODO_PERIPHERY_LATEST_VERSION
+  msg_ok "Installed Komodo Periphery Agent $KOMODO_PERIPHERY_LATEST_VERSION"
 fi
 
 motd_ssh
